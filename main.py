@@ -1,6 +1,7 @@
 import pygame
 import os
 import math
+import random
 
 #initialising pygame
 pygame.init()
@@ -12,7 +13,8 @@ pygame.display.set_caption('hangman game')
 
 #game variables
 hangman_status = 0
-word = 'DEVELOPER'
+words = ['KENDO', 'PYTHON', 'MEN','DEVELOPER']
+word = random.choice(words)
 guessed = []
 
 #colors
@@ -37,6 +39,7 @@ print(letters)
 #fonts
 letter_font = pygame.font.SysFont('comicsans', 40)
 word_font = pygame.font.SysFont('comicsans', 60)
+title_font = pygame.font.SysFont('comicsans', 70)
 
 
 #load images
@@ -49,6 +52,9 @@ for i in range(7):
 
 def draw():
     win.fill(white)
+    #draw title
+    text = title_font.render('DEVELOPER HANGMAN',1,black)
+    win.blit(text, (width/2 - text.get_width()/2, 20))
 
     display_word = ''
     for letter in word:
@@ -70,6 +76,13 @@ def draw():
     win.blit(images[hangman_status] , (150,100))
     pygame.display.update()
     
+def display_message(message):
+    pygame.time.delay(1000)
+    win.fill(white)
+    text = word_font.render(message, 1, black)
+    win.blit(text, (width/2 - text.get_width()/2, height/2 - text.get_height()))
+    pygame.display.update()
+    pygame.time.delay(3000)
 
 #setup game loop
 FPS = 60 #speed of the game
@@ -96,5 +109,20 @@ while run:
                         guessed.append(ltr)
                         if ltr not in word:
                             hangman_status += 1
-        
+
+    draw()
+    won = True
+    for letter in word:
+        if letter not in guessed:
+            won = False
+            break
+
+    if won:
+
+       display_message('YOU WON')
+
+    if hangman_status == 6:
+        display_message('YOU LOST')
+
+
 pygame.quit()
