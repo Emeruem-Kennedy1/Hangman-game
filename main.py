@@ -97,4 +97,4 @@ while run:
                         if ltr not in word:
                             hangman_status += 1
         
-pygame.quit()  
+pygame.quit()
