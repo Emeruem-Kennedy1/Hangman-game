@@ -92,7 +92,7 @@ run = True
 while run:
     clock.tick(FPS)
     
-    draw()
+   
     
     #event checking
     for event in pygame.event.get():
@@ -111,6 +111,7 @@ while run:
                             hangman_status += 1
 
     draw()
+
     won = True
     for letter in word:
         if letter not in guessed:
@@ -118,11 +119,12 @@ while run:
             break
 
     if won:
-
        display_message('YOU WON')
+       break
 
     if hangman_status == 6:
         display_message('YOU LOST')
+        break
 
 
 pygame.quit()
